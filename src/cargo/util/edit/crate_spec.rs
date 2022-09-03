@@ -1,9 +1,8 @@
-//! Crate name parsing.
+//! Crate name parsing
 
 use anyhow::Context as _;
 
-use super::Dependency;
-use super::RegistrySource;
+use super::dependency::{Dependency, RegistrySource};
 use crate::util::validate_package_name;
 use crate::CargoResult;
 

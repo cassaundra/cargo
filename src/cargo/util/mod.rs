@@ -35,6 +35,7 @@ mod counter;
 pub mod cpu;
 mod dependency_queue;
 pub mod diagnostic_server;
+pub mod edit;
 pub mod errors;
 mod flock;
 pub mod graph;

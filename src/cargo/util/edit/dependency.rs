@@ -938,8 +938,9 @@ impl Display for WorkspaceSource {
 mod tests {
     use std::path::Path;
 
-    use crate::ops::cargo_add::manifest::LocalManifest;
     use cargo_util::paths;
+
+    use crate::util::edit::manifest::LocalManifest;
 
     use super::*;
 

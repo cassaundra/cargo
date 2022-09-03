@@ -1,9 +1,5 @@
 //! Core of cargo-add command
 
-mod crate_spec;
-mod dependency;
-mod manifest;
-
 use anyhow::Context;
 use std::collections::BTreeSet;
 use std::collections::VecDeque;
@@ -23,18 +19,17 @@ use crate::core::QueryKind;
 use crate::core::Registry;
 use crate::core::Shell;
 use crate::core::Workspace;
+use crate::util::edit::crate_spec::CrateSpec;
+use crate::util::edit::dependency::Dependency;
+use crate::util::edit::dependency::GitSource;
+use crate::util::edit::dependency::MaybeWorkspace;
+use crate::util::edit::dependency::PathSource;
+use crate::util::edit::dependency::Source;
+use crate::util::edit::dependency::WorkspaceSource;
+use crate::util::edit::manifest::DepTable;
+use crate::util::edit::manifest::LocalManifest;
 use crate::CargoResult;
 use crate::Config;
-use crate_spec::CrateSpec;
-use dependency::Dependency;
-use dependency::GitSource;
-use dependency::PathSource;
-use dependency::RegistrySource;
-use dependency::Source;
-use manifest::LocalManifest;
-
-use crate::ops::cargo_add::dependency::{MaybeWorkspace, WorkspaceSource};
-pub use manifest::DepTable;
 
 /// Information on what dependencies should be added
 #[derive(Clone, Debug)]
