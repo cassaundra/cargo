@@ -2408,3 +2408,36 @@ fn ambiguous_registry_vs_local_package() {
         .run();
     assert_has_installed_exe(cargo_home(), "foo");
 }
+
+#[cargo_test]
+fn outdated_rust_version() {
+    let p = project()
+        .file("src/main.rs", "fn main() {}")
+        .file(
+            "Cargo.toml",
+            r#"
+        [package]
+        name = "foo"
+        version = "0.1.0"
+        rust-version = "1.99999"
+        edition = "2021"
+        "#,
+        )
+        .build();
+
+    cargo_process("install --path")
+        .arg(p.root())
+        .with_status(101)
+        .with_stderr(
+            "\
+[INSTALLING] foo v0.1.0 ([..])
+[ERROR] failed to compile `foo v0.1.0 ([..])`, intermediate artifacts can be found at `[..]`
+
+Caused by:
+  package `foo v0.1.0 ([..])` cannot be built because it requires rustc 1.99999 or newer, while \
+  the currently active rustc version is [..]
+",
+        )
+        .run();
+    assert_has_not_installed_exe(cargo_home(), "foo");
+}
